@@ -1,0 +1,21 @@
+# Build output
+AAServer/AAServer
+AAServer/*.o
+
+# macOS
+.DS_Store
+
+# VS Code (keep .vscode/ tracked, but ignore local overrides)
+.vscode/
+
+# MSVC / Windows build artifacts
+AAServer/Debug/
+AAServer/Release/
+AAServer/ipch/
+AAServer/*.sdf
+AAServer/*.suo
+AAServer/*.opensdf
+
+# Spec / scratch
+spec/
+.claude

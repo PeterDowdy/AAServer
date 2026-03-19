@@ -3,7 +3,11 @@
 
 #include "stdafx.h"
 #include "config.h"
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
+#endif
 #include "ipxserver.h"
 #include <stdlib.h>
 #include <string.h>
@@ -333,7 +337,11 @@ bool IPX_StartServer(Bit16u portnum)
                 // 1 second has gone by
                 UpdateConnections();
             }
+#ifdef _WIN32
             Sleep(1);
+#else
+            usleep(1000);
+#endif
         }
 
         return true;
@@ -343,7 +351,7 @@ bool IPX_StartServer(Bit16u portnum)
     return false;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
     printf("Amulets & Armor IPX Server v1.00\n");
     printf("--------------------------------\n");
@@ -358,7 +366,13 @@ int _tmain(int argc, _TCHAR* argv[])
         exit(2);
     }
 
-    IPX_StartServer(213);
+    Bit16u port = 213;
+    if (argc > 1) {
+        port = (Bit16u)atoi(argv[1]);
+    }
+    printf("Starting on port %d\n", port);
+    fflush(stdout);
+    IPX_StartServer(port);
     return 0;
 }
 
